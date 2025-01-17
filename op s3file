@@ -1,0 +1,15 @@
+Status: Succeeded
+Test Event Name: (unsaved) test event
+
+Response:
+{
+  "statusCode": 400,
+  "body": "\"Error decoding file content: Incorrect padding\""
+}
+
+Function Logs:
+START RequestId: 81ca498d-9ec8-4da0-88f8-fede714721ba Version: $LATEST
+END RequestId: 81ca498d-9ec8-4da0-88f8-fede714721ba
+REPORT RequestId: 81ca498d-9ec8-4da0-88f8-fede714721ba	Duration: 1.42 ms	Billed Duration: 2 ms	Memory Size: 128 MB	Max Memory Used: 81 MB
+
+Request ID: 81ca498d-9ec8-4da0-88f8-fede714721ba
