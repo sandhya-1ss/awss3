@@ -1,0 +1,47 @@
+import json
+import boto3
+import base64
+from botocore.exceptions import NoCredentialsError
+
+# Initialize the S3 client
+s3_client = boto3.client('s3')
+
+def lambda_handler(event, context):
+    # Get the base64-encoded file and bucket name from the event
+    file_content_base64 = event['file_content']
+    bucket_name = event['bucket_name']
+    file_name = event['file_name']
+
+    # Decode the base64 content
+    try:
+        file_content = base64.b64decode(file_content_base64)
+    except Exception as e:
+        return {
+            'statusCode': 400,
+            'body': json.dumps(f"Error decoding file content: {str(e)}")
+        }
+
+    try:
+        # Upload the file to S3
+        s3_client.put_object(
+            Bucket=bucket_name,
+            Key=file_name,
+            Body=file_content,
+            ContentType='application/pdf'  
+        )
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps(f"File {file_name} uploaded successfully to {bucket_name}")
+        }
+
+    except NoCredentialsError:
+        return {
+            'statusCode': 403,
+            'body': json.dumps("Error: No credentials found.")
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f"Error uploading file: {str(e)}")
+        }
